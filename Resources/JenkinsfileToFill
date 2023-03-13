@@ -59,7 +59,7 @@ pipeline {
 			steps {
 				script {
 					echo "Launching Windows Development Build..."
-					bat '''"%UNITY_EXECUTABLE%" -projectPath "%CD%" -quit -batchmode -nographics -customBuildPath "%CD%\\%output%\\%outputWinDevFolder%\\%PROJECT_NAME%.exe" -customBuildName "%PROJECT_NAME%" -executeMethod ProjectBuilder.WindowsDevBuilder'''
+					bat '''"%UNITY_EXECUTABLE%" -projectPath "%CD%" -quit -batchmode -nographics -customBuildPath "%CD%\\%output%\\%outputWinDevFolder%\\%PROJECT_NAME%.exe" -customBuildName "%PROJECT_NAME%" -executeMethod BuildUtility.WindowsDevBuilder'''
 				}
 			}
 		}
@@ -72,14 +72,14 @@ pipeline {
 			steps {
 				script {
 					echo "Launching Windows Development Build..."
-					bat '''"%UNITY_EXECUTABLE%" -projectPath "%CD%" -quit -batchmode -nographics -customBuildPath "%CD%\\%output%\\%outputWinDevFolder%\\%PROJECT_NAME%.exe" -customBuildName "%PROJECT_NAME%" -executeMethod ProjectBuilder.WindowsDevBuilder
+					bat '''"%UNITY_EXECUTABLE%" -projectPath "%CD%" -quit -batchmode -nographics -customBuildPath "%CD%\\%output%\\%outputWinDevFolder%\\%PROJECT_NAME%.exe" -customBuildName "%PROJECT_NAME%" -executeMethod BuildUtility.WindowsDevBuilder
 						echo "Zipping build..."
 						7z a -tzip -r "%output%\\%WINDOWS_DEV_BUILD_NAME%" "%CD%\\%output%\\%outputWinDevFolder%\\*"
 						echo "Uploading dev build artifact to Nexus..."
 						"%CURL_EXECUTABLE%" -X POST "http://localhost:8081/service/rest/v1/components?repository=%PROJECT_NAME%-Dev" -H "accept: application/json" -H "Authorization: Basic %NEXUS_CREDENTIALS%" -F "raw.directory=Windows" -F "raw.asset1=@%output%\\%WINDOWS_DEV_BUILD_NAME%.zip;type=application/x-zip-compressed" -F "raw.asset1.filename=%WINDOWS_DEV_BUILD_NAME%.zip"'''
 						
 					echo "Launching MacOS Development Build..."
-					bat '''"%UNITY_EXECUTABLE%" -projectPath "%CD%" -quit -batchmode -nographics -customBuildPath "%CD%\\%output%\\%outputMacDevFolder%\\%PROJECT_NAME%.app" -customBuildName "%PROJECT_NAME%.app" -executeMethod ProjectBuilder.MacOSDevBuilder
+					bat '''"%UNITY_EXECUTABLE%" -projectPath "%CD%" -quit -batchmode -nographics -customBuildPath "%CD%\\%output%\\%outputMacDevFolder%\\%PROJECT_NAME%.app" -customBuildName "%PROJECT_NAME%.app" -executeMethod BuildUtility.MacOSDevBuilder
 						echo "Zipping build..."
 						7z a -tzip -r "%output%\\%MACOS_DEV_BUILD_NAME%" "%CD%\\%output%\\%outputMacDevFolder%\\*"
 						echo "Uploading dev build artifact to Nexus..."
@@ -97,14 +97,14 @@ pipeline {
 				script {
 					
 					echo "Launching Windows Release Build..."
-					bat '''"%UNITY_EXECUTABLE%" -projectPath "%CD%" -quit -batchmode -nographics -customBuildPath "%CD%\\%output%\\%outputWinFolder%\\%PROJECT_NAME%.exe" -customBuildName "%PROJECT_NAME%" -executeMethod ProjectBuilder.WindowsBuilder
+					bat '''"%UNITY_EXECUTABLE%" -projectPath "%CD%" -quit -batchmode -nographics -customBuildPath "%CD%\\%output%\\%outputWinFolder%\\%PROJECT_NAME%.exe" -customBuildName "%PROJECT_NAME%" -executeMethod BuildUtility.WindowsBuilder
 						echo "Zipping build..."
 						7z a -tzip -r "%output%\\%WINDOWS_BUILD_NAME%" "%CD%\\%output%\\%outputDevFolder%\\*"
 						echo "Uploading release build artifact to Nexus..."
 						"%CURL_EXECUTABLE%" -X POST "http://localhost:8081/service/rest/v1/components?repository=%PROJECT_NAME%-Main" -H "accept: application/json" -H "Authorization: Basic %NEXUS_CREDENTIALS%" -F "raw.directory=Windows" -F "raw.asset1=@%output%\\%WINDOWS_BUILD_NAME%.zip;type=application/x-zip-compressed" -F "raw.asset1.filename=%WINDOWS_BUILD_NAME%.zip"'''
 						
 					echo "Launching MacOS Release Build..."
-					bat '''"%UNITY_EXECUTABLE%" -projectPath "%CD%" -quit -batchmode -nographics -customBuildPath "%CD%\\%output%\\%outputMacFolder%\\%PROJECT_NAME%.app" -customBuildName "%PROJECT_NAME%.app" -executeMethod ProjectBuilder.MacOSBuilder
+					bat '''"%UNITY_EXECUTABLE%" -projectPath "%CD%" -quit -batchmode -nographics -customBuildPath "%CD%\\%output%\\%outputMacFolder%\\%PROJECT_NAME%.app" -customBuildName "%PROJECT_NAME%.app" -executeMethod BuildUtility.MacOSBuilder
 						echo "Zipping build..."
 						7z a -tzip -r "%output%\\%MACOS_BUILD_NAME%" "%CD%\\%output%\\%outputMacFolder%\\*"
 						echo "Uploading release build artifact to Nexus..."

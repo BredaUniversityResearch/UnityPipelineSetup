@@ -37,8 +37,20 @@ pipeline {
 		}
 		stage('Jenkinsfile Creation') {
 			steps {
-				withEnv(["REPO_NAME=${githubRepoName}"]) {
-					py JenkinsFileSetup.py %REPO_NAME% .Resources/JenkinsfileToFill
+				script {
+					withEnv(["REPO_NAME=${githubRepoName}"]) {
+						py JenkinsFileSetup.py %REPO_NAME% .Resources/JenkinsfileToFill
+					}
+				}
+			}
+		}
+		stage('Push to Project') {
+			steps {
+				script {
+					def githubRepoName = env.GITHUB_REPO_NAME
+					withEnv(["REPO_NAME=${githubRepoName}"]) {
+						bat '''GitSetup.bat %REPO_NAME%'''
+					}
 				}
 			}
 		}

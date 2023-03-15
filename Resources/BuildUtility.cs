@@ -17,6 +17,18 @@ class BuildUtility
         BuildPipeline.BuildPlayer(EditorBuildSettings.scenes, outputDir, BuildTarget.StandaloneOSX, BuildOptions.Development);
     }
 
+    private static void AndroidDevBuilder()
+    {
+        string outputDir = GetArg("-customBuildPath");
+        BuildPipeline.BuildPlayer(EditorBuildSettings.scenes, outputDir, BuildTarget.Android, BuildOptions.Development);
+    }
+
+    private static void IOSDevBuilder()
+    {
+        string outputDir = GetArg("-customBuildPath");
+        BuildPipeline.BuildPlayer(EditorBuildSettings.scenes, outputDir, BuildTarget.iOS, BuildOptions.Development);
+    }
+
     private static void WindowsBuilder()
     {
         string outputDir = GetArg("-customBuildPath");
@@ -29,7 +41,19 @@ class BuildUtility
         BuildPipeline.BuildPlayer(EditorBuildSettings.scenes, outputDir, BuildTarget.StandaloneOSX, 0);
     }
 
-	private static string GetArg(string name)
+    private static void AndroidBuilder()
+    {
+        string outputDir = GetArg("-customBuildPath");
+        BuildPipeline.BuildPlayer(EditorBuildSettings.scenes, outputDir, BuildTarget.Android, 0);
+    }
+
+    private static void IOSBuilder()
+    {
+        string outputDir = GetArg("-customBuildPath");
+        BuildPipeline.BuildPlayer(EditorBuildSettings.scenes, outputDir, BuildTarget.iOS, 0);
+    }
+
+    private static string GetArg(string name)
 	{
 		var args = System.Environment.GetCommandLineArgs();
 		for (int i = 0; i < args.Length; i++)

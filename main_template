@@ -1,0 +1,6 @@
+echo "Launching Windows Release Build..."
+					bat '''"%UNITY_EXECUTABLE%" -projectPath "%CD%" -quit -batchmode -nographics -customBuildPath "%CD%\\%output%\\%outputWindowsFolder%\\%PROJECT_NAME%.exe" -customBuildName "%PROJECT_NAME%" -executeMethod BuildUtility.WindowsBuilder
+						echo "Zipping build..."
+						7z a -tzip -r "%output%\\%WINDOWS_BUILD_NAME%" "%CD%\\%output%\\%outputWindowsFolder%\\*"
+						echo "Uploading release build artifact to Nexus..."
+						"%CURL_EXECUTABLE%" -X POST "http://localhost:8081/service/rest/v1/components?repository=%PROJECT_NAME%-Main" -H "accept: application/json" -H "Authorization: Basic %NEXUS_CREDENTIALS%" -F "raw.directory=Windows" -F "raw.asset1=@%output%\\%WINDOWS_BUILD_NAME%.zip;type=application/x-zip-compressed" -F "raw.asset1.filename=%WINDOWS_BUILD_NAME%.zip"'''

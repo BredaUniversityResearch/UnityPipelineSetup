@@ -5,13 +5,14 @@ def COLOR_MAP = [
     'FAILURE': 'danger',
 ]
 
-parameters {
-  string(name: 'GITHUB_REPO_NAME', description: 'Enter the HTTPS URL of the GitHub repository')
-}
-
 pipeline {
 	environment {        		
 		NEXUS_CREDENTIALS = credentials('NEXUS_CREDENTIALS')
+		GITHUB_REPO_NAME = ${params.GITHUB_REPO_NAME}
+		WINDOWS_BUILD = ${params.WINDOWS_BUILD}
+		MACOS_BUILD = ${params.MACOS_BUILD}
+		ANDROID_BUILD = ${params.ANDROID_BUILD}
+		IOS_BUILD = ${params.UNITY_VERSION}
     }
 
 	agent {
@@ -29,30 +30,21 @@ pipeline {
 		stage('Nexus Setup') {
 			steps {				
 				script {
-					def githubRepoName = env.GITHUB_REPO_NAME
-					withEnv(["REPO_NAME=${githubRepoName}"]) {
-						bat '''NexusSetup.bat %REPO_NAME% %NEXUS_CREDENTIALS%'''
-					}
+					bat '''NexusSetup.bat ${params.GITHUB_REPO_NAME} %NEXUS_CREDENTIALS%'''
 				}
 			}
 		}
 		stage('Jenkinsfile Creation') {
 			steps {
 				script {
-					def githubRepoName = env.GITHUB_REPO_NAME
-					withEnv(["REPO_NAME=${githubRepoName}"]) {
-						bat '''py JenkinsFileSetup.py %REPO_NAME% ./Resources/JenkinsfileToFill'''
-					}
+					bat '''py JenkinsFileSetup.py %GITHUB_REPO_NAME% ./Resources/JenkinsfileToFill %WINDOWS_BUILD% %MACOS_BUILD% %ANDROID_BUILD% %IOS_BUILD% %UNITY_VERSION%'''
 				}
 			}
 		}
 		stage('Push to Project') {
 			steps {
 				script {
-					def githubRepoName = env.GITHUB_REPO_NAME
-					withEnv(["REPO_NAME=${githubRepoName}"]) {
-						bat '''GitSetup.bat %REPO_NAME%'''
-					}
+					bat '''GitSetup.bat %GITHUB_REPO_NAME%'''
 				}
 			}
 		}

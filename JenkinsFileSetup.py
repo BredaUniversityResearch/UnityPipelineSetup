@@ -24,7 +24,10 @@ android_build = ConvertStringToBool(android_build)
 ios_build = sys.argv[6]
 ios_build = ConvertStringToBool(ios_build)
 
-input_unity_version = sys.argv[7]
+webGL_build = sys.argv[7]
+webGL_build = ConvertStringToBool(webGL_build)
+
+input_unity_version = sys.argv[8]
 old_unity_version = "UNITY_EXECUTABLE = \"C:\\\\Program Files\\\\Unity\\\\Hub\\\\Editor\\\\2020.3.31f1\\\\Editor\\\\Unity.exe\""
 
 with open("pr_template", 'r') as f:
@@ -86,6 +89,13 @@ if(ios_build):
     modified_jenkinsfile = modified_jenkinsfile.replace('//IOSPR', pr_template)
     modified_jenkinsfile = modified_jenkinsfile.replace('//IOSDEV', dev_template)
     modified_jenkinsfile = modified_jenkinsfile.replace('//IOSMAIN', main_template)
+
+pr_template, dev_template, main_template = change_build('Ios', 'WebGL', pr_template, dev_template, main_template)
+
+if(webGL_build):
+    modified_jenkinsfile = modified_jenkinsfile.replace('//WEBGLPR', pr_template)
+    modified_jenkinsfile = modified_jenkinsfile.replace('//WEBGLDEV', dev_template)
+    modified_jenkinsfile = modified_jenkinsfile.replace('//WEBGLMAIN', main_template)
 
 unity_version = old_unity_version.replace("2020.3.31f1", input_unity_version)
 modified_jenkinsfile = modified_jenkinsfile.replace(old_unity_version, unity_version)

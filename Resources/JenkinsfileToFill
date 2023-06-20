@@ -25,15 +25,19 @@ pipeline {
 		ANDROID_DEV_BUILD_NAME = "Android-Dev-${currentBuild.number}"
 		IOS_BUILD_NAME = "IOS-${currentBuild.number}"
 		IOS_DEV_BUILD_NAME = "IOS-Dev-${currentBuild.number}"
+		WEBGL_BUILD_NAME = "WebGL-${currentBuild.number}"
+		WEBGL_DEV_BUILD_NAME = "WebGL-Dev-${currentBuild.number}"
 		
 		String output = "Output"
 		String outputMacOSDevFolder = "CurrentMacDevBuild"
 		String outputWindowsDevFolder = "CurrentWinDevBuild"
 		String outputAndroidDevFolder = "CurrentAndroidDevBuild"
+		String outputWebGLDevFolder = "CurrentWebGLDevBuild"
 		String outputIosDevFolder = "CurrentIosDevBuild"
 		String outputMacOSFolder = "CurrentMacBuild"
 		String outputWindowsFolder = "CurrentWinBuild"
 		String outputAndroidFolder = "CurrentAndroidBuild"
+		String outputWebGLFolder = "CurrentWebGLBuild"
 		String outputIosFolder = "CurrentIosBuild"
 		
 		NEXUS_CREDENTIALS = credentials('NEXUS_CREDENTIALS')
@@ -75,6 +79,8 @@ pipeline {
 					
 					//IOSPR
 					
+					//WEBGLPR
+					
 				}
 			}
 		}
@@ -94,6 +100,8 @@ pipeline {
 					//ANDROIDDEV
 					
 					//IOSDEV
+					
+					//WEBGLDEV
 				}
 			}
 		}
@@ -113,6 +121,8 @@ pipeline {
 					//ANDROIDMAIN
 					
 					//IOSMAIN
+					
+					//WEBGLMAIN
 				}
 			}
 		}

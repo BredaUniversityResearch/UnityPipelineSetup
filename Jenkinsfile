@@ -32,7 +32,7 @@ pipeline {
 		stage('Jenkinsfile Creation') {
 			steps {
 				script {
-					bat '''py JenkinsFileSetup.py %GITHUB_REPO_NAME% ./Resources/JenkinsfileToFill %WINDOWS_BUILD% %MACOS_BUILD% %ANDROID_BUILD% %IOS_BUILD% %UNITY_VERSION%'''
+					bat '''py JenkinsFileSetup.py %GITHUB_REPO_NAME% ./Resources/JenkinsfileToFill %WINDOWS_BUILD% %MACOS_BUILD% %ANDROID_BUILD% %IOS_BUILD% %WEBGL_BUILD% %UNITY_VERSION%'''
 				}
 			}
 		}

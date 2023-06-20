@@ -23,6 +23,12 @@ class BuildUtility
         BuildPipeline.BuildPlayer(EditorBuildSettings.scenes, outputDir, BuildTarget.Android, BuildOptions.Development);
     }
 
+    private static void WebGLDevBuilder()
+    {
+        string outputDir = GetArg("-customBuildPath");
+        BuildPipeline.BuildPlayer(EditorBuildSettings.scenes, outputDir, BuildTarget.WebGL, BuildOptions.Development);
+    }
+
     private static void IOSDevBuilder()
     {
         string outputDir = GetArg("-customBuildPath");
@@ -45,6 +51,12 @@ class BuildUtility
     {
         string outputDir = GetArg("-customBuildPath");
         BuildPipeline.BuildPlayer(EditorBuildSettings.scenes, outputDir, BuildTarget.Android, 0);
+    }
+
+    private static void WebGLBuilder()
+    {
+        string outputDir = GetArg("-customBuildPath");
+        BuildPipeline.BuildPlayer(EditorBuildSettings.scenes, outputDir, BuildTarget.WebGL, 0);
     }
 
     private static void IOSBuilder()

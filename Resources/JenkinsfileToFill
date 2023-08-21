@@ -1,143 +1,143 @@
 #!groovy
 
 def COLOR_MAP = [
-	'SUCCESS': 'good', 
-	'FAILURE': 'danger',
+    'SUCCESS': 'good', 
+    'FAILURE': 'danger',
 ]
 
 pipeline {
-	
-	environment {
-		PROJECT_NAME = ""
-		
-		// Unity tool installation
-		UNITY_EXECUTABLE = "C:\\Program Files\\Unity\\Hub\\Editor\\2020.3.31f1\\Editor\\Unity.exe"
-		
-		// Latest curl version installation
-		CURL_EXECUTABLE = "C:\\Program Files\\Git\\mingw64\\bin\\curl.exe"
+    
+    environment {
+        PROJECT_NAME = ""
+        
+        // Unity tool installation
+        UNITY_EXECUTABLE = "C:\\Program Files\\Unity\\Hub\\Editor\\2020.3.31f1\\Editor\\Unity.exe"
+        
+        // Latest curl version installation
+        CURL_EXECUTABLE = "C:\\Program Files\\Git\\mingw64\\bin\\curl.exe"
 
-		// Unity Build params & paths
-		WINDOWS_BUILD_NAME = "Windows-${currentBuild.number}"
-		WINDOWS_DEV_BUILD_NAME = "Windows-Dev-${currentBuild.number}"
-		MACOS_BUILD_NAME = "MacOS-${currentBuild.number}"
-		MACOS_DEV_BUILD_NAME = "MacOS-Dev-${currentBuild.number}"
-		ANDROID_BUILD_NAME = "Android-${currentBuild.number}"
-		ANDROID_DEV_BUILD_NAME = "Android-Dev-${currentBuild.number}"
-		IOS_BUILD_NAME = "IOS-${currentBuild.number}"
-		IOS_DEV_BUILD_NAME = "IOS-Dev-${currentBuild.number}"
-		WEBGL_BUILD_NAME = "WebGL-${currentBuild.number}"
-		WEBGL_DEV_BUILD_NAME = "WebGL-Dev-${currentBuild.number}"
-		
-		String output = "Output"
-		String outputMacOSDevFolder = "CurrentMacDevBuild"
-		String outputWindowsDevFolder = "CurrentWinDevBuild"
-		String outputAndroidDevFolder = "CurrentAndroidDevBuild"
-		String outputWebGLDevFolder = "CurrentWebGLDevBuild"
-		String outputIosDevFolder = "CurrentIosDevBuild"
-		String outputMacOSFolder = "CurrentMacBuild"
-		String outputWindowsFolder = "CurrentWinBuild"
-		String outputAndroidFolder = "CurrentAndroidBuild"
-		String outputWebGLFolder = "CurrentWebGLBuild"
-		String outputIosFolder = "CurrentIosBuild"
-		
-		NEXUS_CREDENTIALS = credentials('NEXUS_CREDENTIALS')
-	}
-	
-	options {
-		timestamps()
+        // Unity Build params & paths
+        WINDOWS_BUILD_NAME = "Windows-${currentBuild.number}"
+        WINDOWS_DEV_BUILD_NAME = "Windows-Dev-${currentBuild.number}"
+        MACOS_BUILD_NAME = "MacOS-${currentBuild.number}"
+        MACOS_DEV_BUILD_NAME = "MacOS-Dev-${currentBuild.number}"
+        ANDROID_BUILD_NAME = "Android-${currentBuild.number}"
+        ANDROID_DEV_BUILD_NAME = "Android-Dev-${currentBuild.number}"
+        IOS_BUILD_NAME = "IOS-${currentBuild.number}"
+        IOS_DEV_BUILD_NAME = "IOS-Dev-${currentBuild.number}"
+        WEBGL_BUILD_NAME = "WebGL-${currentBuild.number}"
+        WEBGL_DEV_BUILD_NAME = "WebGL-Dev-${currentBuild.number}"
+        
+        String output = "Output"
+        String outputMacOSDevFolder = "CurrentMacDevBuild"
+        String outputWindowsDevFolder = "CurrentWinDevBuild"
+        String outputAndroidDevFolder = "CurrentAndroidDevBuild"
+        String outputWebGLDevFolder = "CurrentWebGLDevBuild"
+        String outputIosDevFolder = "CurrentIosDevBuild"
+        String outputMacOSFolder = "CurrentMacBuild"
+        String outputWindowsFolder = "CurrentWinBuild"
+        String outputAndroidFolder = "CurrentAndroidBuild"
+        String outputWebGLFolder = "CurrentWebGLBuild"
+        String outputIosFolder = "CurrentIosBuild"
+        
+        NEXUS_CREDENTIALS = credentials('NEXUS_CREDENTIALS')
     }
-	
-	agent {
-			node {
-					label 'windows'
-		}
-	}
-	
-	stages {
-			stage('Clone Script') {
-					steps {
-						echo "Cloning the branch commit"
-						checkout scm
-						echo "Fetching tags"
-						bat '''git fetch --all --tags'''
-				}
-		}
-		
-		stage('Build Pull Request') {
-		
-			when { 
-					expression { env.BRANCH_NAME.startsWith('PR') }
-				}
-			steps {
-				script {
-					
-					//WINDOWSPR
-					
-					//MACOSPR
-					
-					//ANDROIDPR
-					
-					//IOSPR
-					
-					//WEBGLPR
-					
-				}
-			}
-		}
-		
-		stage('Build Dev Branch') {
-		
-			when { 
-					expression { BRANCH_NAME ==~ /(dev)/ }
-				}
-			steps {
-				script {
-					
-					//WINDOWSDEV
-					
-					//MACOSDEV
-					
-					//ANDROIDDEV
-					
-					//IOSDEV
-					
-					//WEBGLDEV
-				}
-			}
-		}
-		
-		stage('Build Main Branch') {
-		
-			when { 
-					expression { BRANCH_NAME ==~ /(main)/ }
-				}
-			steps {
-				script {
-					
-					//WINDOWSMAIN
-					
-					//MACOSMAIN
-					
-					//ANDROIDMAIN
-					
-					//IOSMAIN
-					
-					//WEBGLMAIN
-				}
-			}
-		}
-	}
-	post {
-			always {
-					script {
-						if(fileExists(output)) {
-							echo "Cleaning up workspace..."
-							bat '''RMDIR %output% /S /Q'''
-						}
-					}
-					
-					slackSend color: COLOR_MAP[currentBuild.currentResult],
-					message: "*${currentBuild.currentResult}:* Job ${env.JOB_NAME} build ${env.BUILD_NUMBER}\n More info at: ${env.BUILD_URL}"
-			}
-		}
+    
+    options {
+        timestamps()
+    }
+    
+    agent {
+        node {
+            label 'windows'
+        }
+    }
+    
+    stages {
+        stage('Clone Script') {
+            steps {
+                echo "Cloning the branch commit"
+                checkout scm
+                echo "Fetching tags"
+                bat '''git fetch --all --tags'''
+            }
+        }
+        
+        stage('Build Pull Request') {
+        
+            when { 
+                expression { env.BRANCH_NAME.startsWith('PR') }
+            }
+            steps {
+                script {
+                    
+                    //WINDOWSPR
+                    
+                    //MACOSPR
+                    
+                    //ANDROIDPR
+                    
+                    //IOSPR
+                    
+                    //WEBGLPR
+                    
+                }
+            }
+        }
+        
+        stage('Build Dev Branch') {
+        
+            when { 
+                expression { BRANCH_NAME ==~ /(dev)/ }
+            }
+            steps {
+                script {
+                    
+                    //WINDOWSDEV
+                    
+                    //MACOSDEV
+                    
+                    //ANDROIDDEV
+                    
+                    //IOSDEV
+                    
+                    //WEBGLDEV
+                }
+            }
+        }
+        
+        stage('Build Main Branch') {
+        
+            when { 
+                expression { BRANCH_NAME ==~ /(main)/ }
+            }
+            steps {
+                script {
+                    
+                    //WINDOWSMAIN
+                    
+                    //MACOSMAIN
+                    
+                    //ANDROIDMAIN
+                    
+                    //IOSMAIN
+                    
+                    //WEBGLMAIN
+                }
+            }
+        }
+    }
+    post {
+        always {
+            script {
+                if(fileExists(output)) {
+                    echo "Cleaning up workspace..."
+                    bat '''RMDIR %output% /S /Q'''
+                }
+            }
+            
+            slackSend color: COLOR_MAP[currentBuild.currentResult],
+            message: "*${currentBuild.currentResult}:* Job ${env.JOB_NAME} build ${env.BUILD_NUMBER}\n More info at: ${env.BUILD_URL}"
+        }
+    }
 }
